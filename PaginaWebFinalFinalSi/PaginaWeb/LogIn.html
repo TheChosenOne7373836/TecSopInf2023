@@ -1,6 +1,8 @@
 <html lang="en">
 <head class="responsive">
     <head>
+      <script src="https://code.jquery.com/jquery-3.6.4.js"integrity="sha256-a9jBBRygX1B
+      h5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="theme-color" content="#171a21">
@@ -56,44 +58,23 @@
     <div class="container text-center">
         <br>
         <div class="row">
-            <div class="col" style="color: aliceblue;">
-                <div class="mb-3">
-                    <h2 for="exampleFormControlInput1" class="form-label">Nombre de Usuario</h2>
-                    <input type="username" name="user" id="userName" placeholder="TheChosenOne . . .">
-                  </div>
-                  <div class="mb-3">
-                    <h3 for="exampleFormControlInput1" class="form-label">Contraseña de Usuario</h3>
-                    <input type="email" class="form-control" id="userPassword" placeholder="">
-                  </div>
-                  <div class="row g-3">
-                    <br>
-                    <h3 for="exampleFormControlInput1" class="form-label">Complete la siguiente informacion:</h3>
-
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" placeholder="N° de Identificacion" id="userIdent">
-                    </div>
-                    <div class="col-sm">
-                      <input type="text" class="form-control" placeholder="Genero" id="userGenre">
-                    </div>
-                    <div class="col-sm">
-                      <input type="text" class="form-control" placeholder="Edad" id="userAge">
-                    </div>
-                    <div class="mb-3">
-                        <h4 for="exampleFormControlInput1" class="form-label">Correo Electronico</h4>
-                        <input type="email" class="form-control" id="userMail" placeholder="nombre@ejemplo.com">
-                      </div>
-                      <div class="mb-3">
-                        <h4 for="exampleFormControlInput1" class="form-label">N° de Telefono</h4>
-                        <input type="" class="form-control" id="userPhone" placeholder="15 499...">
-                      </div>
-                  </div>
-                  <br><br>
-                  <div class="col-12">
-                    <button type="submitButton" class="btn btn-primary" onclick="guardarDatos()">
-                        <a href="./ThankYou.html" style="color: aliceblue;">  Guardar</a>
-                      
-                    </button>
-                  </div>
+            <div class="col" style="color: rgb(255, 255, 255);">
+              <form id="FormsUser" action="./ThankYou.html" method="POST">
+                <label for="nombre">Nombre de Usuario:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <br><br><br><br>
+              
+                <label for="apellido">Contraseña:</label>
+                <input type="text" id="password" name="apellido" required>
+                <br><br><br><br>
+              
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" id="mail" name="correo" required>
+                <br><br><br><br>
+              
+                <button type="submit" id="enviarForms">Enviar</button>
+              </form>
+              
             </div>
         </div>
     </div>
