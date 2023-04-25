@@ -20,6 +20,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
     crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js"integrity="sha256-a9jBBRygX1B
+    h5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+    <script src="email.js"></script>
     <!-- NO  TOCAR  -->
     <!-- NO  TOCAR  -->
 
@@ -60,19 +65,23 @@
         <div class="row">
             <div class="col" style="color: rgb(255, 255, 255);">
               <form id="FormsUser" action="./ThankYou.html" method="POST">
+
                 <label for="nombre">Nombre de Usuario:</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <input type="text" id="ITnombre" name="nombre" class="nombreCampo">
+                <div id="mensaje1" class="errores"></div>
                 <br><br><br><br>
               
                 <label for="apellido">Contraseña:</label>
-                <input type="text" id="password" name="apellido" required>
+                <input type="text" id="ITpassword" name="apellido" class="passwordCampo">
+                <div id="mensaje2" class="errores"></div>
                 <br><br><br><br>
               
                 <label for="correo">Correo electrónico:</label>
-                <input type="email" id="mail" name="correo" required>
+                <input type="email" id="ITmail" name="correo" class="mailCampo" >
+                <div id="mensaje3" class="errores"></div>
                 <br><br><br><br>
               
-                <button type="submit" id="enviarForms">Enviar</button>
+                <button type="submit" id="enviarForms" class="boton">Enviar</button>
               </form>
               
             </div>
