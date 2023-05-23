@@ -3,11 +3,9 @@ $(document).ready(function() {
     var currentSlide = 0;
     var totalSlides = $('.carousel-img').length;
     var slideInterval;
-    var audioElements = []; 
+    var audioElements = []; // array que almacena los audios
   
-    //define sonidos
-
-    //DISCLAIMER: la parte del sonido la hicimos a traves de chatgpt; el resto del codigo (carrousel) lo hicimos por propia cuenta
+    // audios
     var soundFilePaths = [
       './sounds/ballin.mp3',
       './sounds/vineboom.mp3',
@@ -21,41 +19,55 @@ $(document).ready(function() {
     function nextSlide() {
       var previousSlide = currentSlide;
       currentSlide = (currentSlide + 1) % totalSlides;
-      var slidePosition = currentSlide * -carouselWidth;
-      $('#carousel-images').css('transform', 'translateX(' + slidePosition + 'px)');
   
-      // detiene sonido de imagen
+      // detiene audio de la imagen previa
       if (previousSlide !== currentSlide) {
         stopSound(previousSlide);
       }
   
-      // reproduce sonido de la imagen actual
+      // audio de la imagen actual
       playSound(currentSlide);
+  
+      // animacion 
+      $('.carousel-img')
+        .eq(previousSlide)
+        .fadeOut(500, function() {
+          $('.carousel-img')
+            .eq(currentSlide)
+            .fadeIn(500);
+        });
     }
   
     function prevSlide() {
       var previousSlide = currentSlide;
       currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      var slidePosition = currentSlide * -carouselWidth;
-      $('#carousel-images').css('transform', 'translateX(' + slidePosition + 'px)');
   
-      // --
+
       if (previousSlide !== currentSlide) {
         stopSound(previousSlide);
       }
   
-      // --
+
       playSound(currentSlide);
+  
+
+      $('.carousel-img')
+        .eq(previousSlide)
+        .fadeOut(500, function() {
+          $('.carousel-img')
+            .eq(currentSlide)
+            .fadeIn(500);
+        });
     }
   
-    // --
+
     function playSound(slideIndex) {
       var audio = new Audio(soundFilePaths[slideIndex]);
       audio.play();
       audioElements[slideIndex] = audio;
     }
   
-    // --
+
     function stopSound(slideIndex) {
       if (audioElements[slideIndex]) {
         audioElements[slideIndex].pause();
