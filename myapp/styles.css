@@ -1,0 +1,41 @@
+#carousel-container {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  #carousel-images {
+    width: 300%;
+    height: 100%;
+    display: flex;
+    transition: left 0.5s;
+  }
+  
+  .carousel-img {
+    flex: 0 0 33.33%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  #prev-btn,
+  #next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  #prev-btn {
+    left: 10px;
+  }
+  
+  #next-btn {
+    right: 10px;
+  }
+  
