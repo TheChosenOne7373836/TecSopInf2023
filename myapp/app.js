@@ -27,7 +27,24 @@ app.get('/goofyahh',(req,res) => {
   res.redirect("https://www.youtube.com/watch?v=QxmSePGOcYc#t=3m28s")
 })
 
+app.get("/insert", (req, res) => {
 
+  var mysql      = require('mysql');
+  var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'alumno',
+    password : 'alumnoipm',
+    database : 'DBTesting' 
+  });
+    connection.connect();
+  
+  connection.query('insert into DBTesting values(/*llenar*/); ', function (error, results, fields) {
+    if (error) throw error;
+    else console.log("Succesfull");
+  
+  connection.end();
+  });
+  });
 
 app.use('/redirect', function(req, res){
   res.sendFile(__dirname + '/carrusel.html');
