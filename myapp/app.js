@@ -5,6 +5,9 @@ const port = 3000
 app.use(express.static('./dist/client'));
 app.use(express.static('public'));
 
+
+
+
 app.listen(port, () => {
   console.log(`App totalmente funcional en puerto: [${port}]`)
 })
@@ -27,38 +30,17 @@ app.get('/goofyahh',(req,res) => {
   res.redirect("https://www.youtube.com/watch?v=QxmSePGOcYc#t=3m28s")
 })
 
-app.get("/insert", (req, res) => {
-
-  var mysql      = require('mysql');
-  var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'alumno',
-    password : 'alumnoipm',
-    database : 'DBTesting' 
-  });
-    connection.connect();
-  
-  connection.query('insert into DBTesting values(/*llenar*/); ', function (error, results, fields) {
-    if (error) throw error;
-    else console.log("Succesfull");
-  
-  connection.end();
-  });
-  });
+app.get("/forms", (req, res) => {
+  res.sendFile(__dirname + '/PaginaWeb_FormularioJQuery/LogIn.html');
+});
 
 app.use('/redirect', function(req, res){
-  res.sendFile(__dirname + '/carrusel.html');
+  res.sendFile(__dirname + '/PaginaWeb_CarrouselJQuery/index.html');
 });
 
-app.use(function(req, res){
-  if(!req.session.accessToken){
-    res.redirect('/redirect');
-  }
-});
-
+app.use(express.static('PaginaWeb_CarrouselJQuery'));
+app.use(express.static('PaginaWeb_FormularioJQuery'));
 app.use(express.static('public'))
-
-
 
 
 //por default cuando no hay pagina

@@ -1,0 +1,12 @@
+#container {
+  text-align: center;
+}
+
+.campo {
+  margin-bottom: 10px;
+}
+
+.errores {
+  color: red;
+  display: none;
+}
