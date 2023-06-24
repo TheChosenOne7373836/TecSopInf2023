@@ -1,56 +1,62 @@
-$(document).ready(function() {
-    $('#FormsUser').submit(function(event) {
-      event.preventDefault(); // no se puede enviar form. como està
-  
-      var nombreUsuario = $('#nombreUsuario').val().trim();
-      var passwordUsuario = $('#passwordUsuario').val().trim();
-      var mailUsuario = $('#mailUsuario').val().trim();
-  
-      // oculta mensajes de error
-      $('.errores').hide();
-  
-      if (nombreUsuario === '') {
-        mostrarError('#mensaje1', 'Ingrese nombre');
-      } else if (passwordUsuario === '') {
-        mostrarError('#mensaje2', 'Ingrese una contraseña');
-      } else if (mailUsuario === '') {
-        mostrarError('#mensaje3', 'Ingrese un mail');
-      } else if (!validarEmail(mailUsuario)) {
-        mostrarError('#mensaje3', 'Mail invalido');
-      } else {
-        // redirecciona a archivo en misma carpeta
-        var mysql      = require('mysql');
-        var connection = mysql.createConnection({
-          host     : 'localhost',
-          user     : 'alumno',
-          password : 'alumnoipm',
-          database : 'DBTesting' 
-        });
-      
-        connection.connect(function(err){
-          if(err) throw err;
-          console.log("Conectado");
-          var sql = "INSERT INTO Clientes(Nombre, Contrasena, Correo) values ";
-          var resultados = [
-            [nombreUsuario, passwordUsuario, mailUsuario]
-        ]
-        })
-  
-        connection.query(sql, [resultados], function(err, result){
-          if(err) throw err;
-          console.log("Insercion completada: " + result.affectedRows);
-        })
+const express = require('express');
+const mysql = require('mysql');
 
-      }
+const app = express();
+const port = 3000;
+
+// Configurar la conexión a la base de datos
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'alumno',
+  password: 'alumnoipm',
+  database: 'DBTesting'
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log('Conectado a la base de datos');
+});
+
+// Manejar la solicitud POST del formulario
+app.post('/FormsUser', (req, res) => {
+  const nombreUsuario = req.body.nombreUsuario.trim();
+  const passwordUsuario = req.body.passwordUsuario.trim();
+  const mailUsuario = req.body.mailUsuario.trim();
+
+  if (nombreUsuario === '') {
+    mostrarError('#mensaje1', 'Ingrese nombre');
+  } else if (passwordUsuario === '') {
+    mostrarError('#mensaje2', 'Ingrese una contraseña');
+  } else if (mailUsuario === '') {
+    mostrarError('#mensaje3', 'Ingrese un mail');
+  } else if (!validarEmail(mailUsuario)) {
+    mostrarError('#mensaje3', 'Mail invalido');
+  } else {
+    // Insertar datos en la base de datos
+    const sql = 'insert into Clientes (nombre, contrasena, correo) values ';
+    const values = [nombreUsuario, passwordUsuario, mailUsuario];
+
+    connection.query(sql, values, function(err, result) {
+      if (err) throw err;
+      console.log('Completada: ' + result.affectedRows);
+
+      // Realizar cualquier otra acción necesaria después de la inserción en la base de datos
+
+      res.send('Registro exitoso'); // Enviar una respuesta al cliente
     });
-  
-    function mostrarError(selector, mensaje) {
-      $(selector).text(mensaje).show();
-    }
-  
-    function validarEmail(email) { //verifica mail
-      var regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-      return regex.test(email);
-    }
-  });
-  
+  }
+});
+
+// Iniciar el servidor
+app.listen(port, () => {
+  console.log('Puerto de servidor: ' + port);
+});
+
+function mostrarError(selector, mensaje) {
+  $(selector).text(mensaje).show();
+}
+
+function validarEmail(email) {
+  const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return regex.test(email);
+}
