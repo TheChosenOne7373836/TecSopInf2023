@@ -12,16 +12,19 @@ const connection = mysql.createConnection({
   database: 'DBTesting'
 });
 
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log('Conectado a la base de datos');
+connection.connect((error) => {
+  if (error) {
+    console.error('Error al conectar a DB: ' + error.stack);
+    return;
+  }
+  console.log('Conectado a DB');
 });
 
+
 // Manejar la solicitud POST del formulario
-app.post('/FormsUser', (req, res) => {
-  const nombreUsuario = req.body.nombreUsuario.trim();
-  const passwordUsuario = req.body.passwordUsuario.trim();
-  const mailUsuario = req.body.mailUsuario.trim();
+  const nombreUsuario = $('#nombreUsuario').val().trim();
+  const passwordUsuario = $('#passwordUsuario').val().trim();
+  const mailUsuario = $('#mailUsuario').val().trim();
 
   if (nombreUsuario === '') {
     mostrarError('#mensaje1', 'Ingrese nombre');
@@ -32,20 +35,28 @@ app.post('/FormsUser', (req, res) => {
   } else if (!validarEmail(mailUsuario)) {
     mostrarError('#mensaje3', 'Mail invalido');
   } else {
-    // Insertar datos en la base de datos
-    const sql = 'insert into Clientes (nombre, contrasena, correo) values ';
-    const values = [nombreUsuario, passwordUsuario, mailUsuario];
-
-    connection.query(sql, values, function(err, result) {
-      if (err) throw err;
-      console.log('Completada: ' + result.affectedRows);
-
-      // Realizar cualquier otra acción necesaria después de la inserción en la base de datos
-
-      res.send('Registro exitoso'); // Enviar una respuesta al cliente
+    const data = {
+      name: nombreUsuario,
+      password: passwordUsuario,
+      mail: mailUsuario
+    };
+    
+    const query = 'INSERT INTO Clientes SET ?';
+    connection.query(query, data, (error, results) => {
+      if (error) {
+        console.error('Error al insertar: ' + error.stack);
+        return;
+      }
+      console.log('Datos insertados');
     });
-  }
-});
+    connection.end((error) => {
+      if (error) {
+        console.error('Error al cerrar la conexion: ' + error.stack);
+        return;
+      }
+      console.log('Conexion terminada');
+    });
+  };
 
 // Iniciar el servidor
 app.listen(port, () => {
